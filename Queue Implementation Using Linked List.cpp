@@ -42,11 +42,11 @@ public:
 			length--;
 		}
 	}
-	int front() {
+	t front() {
 		if (is_empty())cout << "Queue is empty." << endl;
 		else return frontptr->item;
 	}
-	int rear() {
+	t rear() {
 		if (is_empty())cout << "Queue is empty." << endl;
 		else return rearptr->item;
 	}
