@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -19,36 +20,54 @@ Node *newnode(int data)
     return node;                        // Return the created node
 }
 
+// Depth First Traversal (DFS)
+
 // Preorder Traversal (Root → Left → Right)
 void PreorderTraversal(Node *root)
 {
-    if (root != nullptr)
-    {
-        cout << root->data << ' ';      // Visit root
-        PreorderTraversal(root->left);  // Traverse left subtree
-        PreorderTraversal(root->right); // Traverse right subtree
-    }
+    if (root == nullptr)
+        return;
+    cout << root->data << ' ';      // Visit root
+    PreorderTraversal(root->left);  // Traverse left subtree
+    PreorderTraversal(root->right); // Traverse right subtree
 }
 
 // Inorder Traversal (Left → Root → Right)
 void InorderTraversal(Node *root)
 {
-    if (root != nullptr)
-    {
-        InorderTraversal(root->left);  // Traverse left subtree
-        cout << root->data << ' ';     // Visit root
-        InorderTraversal(root->right); // Traverse right subtree
-    }
+    if (root == nullptr)
+        return;
+    InorderTraversal(root->left);  // Traverse left subtree
+    cout << root->data << ' ';     // Visit root
+    InorderTraversal(root->right); // Traverse right subtree
 }
 
 // Postorder Traversal (Left → Right → Root)
 void PostorderTraversal(Node *root)
 {
-    if (root != nullptr)
+    if (root == nullptr)
+        return;
+    PostorderTraversal(root->left);  // Traverse left subtree
+    PostorderTraversal(root->right); // Traverse right subtree
+    cout << root->data << ' ';       // Visit root
+}
+
+// Breadth First Traversal (BFS)
+void LevelorderTraversal(Node *root)
+{
+    if (root == nullptr)
+        return;      // Return if tree is empty
+    queue<Node *> Q; // Create a queue to store nodes
+    Q.push(root);    // Start with the root node
+    while (!Q.empty())
     {
-        PostorderTraversal(root->left);  // Traverse left subtree
-        PostorderTraversal(root->right); // Traverse right subtree
-        cout << root->data << ' ';       // Visit root
+        Node *curr = Q.front();    // Get the front node
+        cout << curr->data << ' '; // Print current node's data
+        if (curr->left != nullptr) // Enqueue left child if exists
+            Q.push(curr->left);
+        if (curr->right != nullptr) // Enqueue right child if exists
+            Q.push(curr->right);
+        Q.pop(); // Remove the processed node
     }
 }
 
@@ -80,6 +99,10 @@ int main()
 
     cout << "Postorder: ";
     PostorderTraversal(root);
+    cout << '\n';
+
+    cout << "Levelorder: ";
+    LevelorderTraversal(root);
     cout << '\n';
 
     return 0;
