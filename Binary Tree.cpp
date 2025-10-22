@@ -4,17 +4,17 @@
 using namespace std;
 
 // Define a structure for a tree node
-struct Node
+struct TreeNode
 {
-    int data;    // Value stored in the node
-    Node *left;  // Pointer to the left child
-    Node *right; // Pointer to the right child
+    int data;        // Value stored in the node
+    TreeNode *left;  // Pointer to the left child
+    TreeNode *right; // Pointer to the right child
 };
 
 // Function to create a new node with a given value
-Node *newnode(int data)
+TreeNode *newnode(int data)
 {
-    Node *node = new Node;              // Allocate memory for a new node
+    TreeNode *node = new TreeNode;      // Allocate memory for a new node
     node->data = data;                  // Assign the value
     node->left = node->right = nullptr; // No children yet
     return node;                        // Return the created node
@@ -23,7 +23,7 @@ Node *newnode(int data)
 // Depth First Traversal (DFS)
 
 // Preorder Traversal (Root → Left → Right)
-void PreorderTraversal(Node *root)
+void PreorderTraversal(TreeNode *root)
 {
     if (root == nullptr)
         return;
@@ -33,7 +33,7 @@ void PreorderTraversal(Node *root)
 }
 
 // Inorder Traversal (Left → Root → Right)
-void InorderTraversal(Node *root)
+void InorderTraversal(TreeNode *root)
 {
     if (root == nullptr)
         return;
@@ -43,7 +43,7 @@ void InorderTraversal(Node *root)
 }
 
 // Postorder Traversal (Left → Right → Root)
-void PostorderTraversal(Node *root)
+void PostorderTraversal(TreeNode *root)
 {
     if (root == nullptr)
         return;
@@ -53,20 +53,20 @@ void PostorderTraversal(Node *root)
 }
 
 // Breadth First Traversal (BFS)
-void LevelorderTraversal(Node *root)
+void LevelorderTraversal(TreeNode *root)
 {
     if (root == nullptr)
-        return;      // Return if tree is empty
-    queue<Node *> Q; // Create a queue to store nodes
-    Q.push(root);    // Start with the root node
+        return;          // Return if tree is empty
+    queue<TreeNode *> Q; // Create a queue to store nodes
+    Q.push(root);        // Start with the root node
     while (!Q.empty())
     {
         int LevelSize = Q.size(); // Number of nodes in the current level
         for (int i = 0; i < LevelSize; i++)
         {
-            Node *curr = Q.front();    // Get the front node
-            cout << curr->data << ' '; // Print current node's data
-            if (curr->left != nullptr) // Enqueue left child if exists
+            TreeNode *curr = Q.front(); // Get the front node
+            cout << curr->data << ' ';  // Print current node's data
+            if (curr->left != nullptr)  // Enqueue left child if exists
                 Q.push(curr->left);
             if (curr->right != nullptr) // Enqueue right child if exists
                 Q.push(curr->right);
@@ -77,7 +77,7 @@ void LevelorderTraversal(Node *root)
 }
 
 // Delete Binary Tree
-void DeleteBinaryTree(Node *&current)
+void DeleteBinaryTree(TreeNode *&current)
 {
     if (current == nullptr)
         return;
@@ -85,6 +85,17 @@ void DeleteBinaryTree(Node *&current)
     DeleteBinaryTree(current->right);
     delete current;
     current = nullptr; // Avoid dangling pointer
+}
+
+// Clone Binary Tree
+TreeNode *CloneBinaryTree(TreeNode *root)
+{
+    if (root == nullptr)
+        return nullptr;
+    TreeNode *temp = newnode(root->data);
+    temp->left = CloneBinaryTree(root->left);
+    temp->right = CloneBinaryTree(root->right);
+    return temp;
 }
 
 int main()
@@ -99,7 +110,7 @@ int main()
         4   5
     */
 
-    Node *root = newnode(1);
+    TreeNode *root = newnode(1);
     root->left = newnode(2);
     root->right = newnode(3);
     root->left->left = newnode(4);
@@ -117,9 +128,8 @@ int main()
     PostorderTraversal(root);
     cout << '\n';
 
-    cout << "Levelorder: ";
+    cout << "Levelorder: \n";
     LevelorderTraversal(root);
-    cout << '\n';
 
     return 0;
 }
