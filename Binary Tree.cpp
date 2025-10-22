@@ -76,6 +76,17 @@ void LevelorderTraversal(Node *root)
     }
 }
 
+// Delete Binary Tree
+void DeleteBinaryTree(Node *&current)
+{
+    if (current == nullptr)
+        return;
+    DeleteBinaryTree(current->left);
+    DeleteBinaryTree(current->right);
+    delete current;
+    current = nullptr; // Avoid dangling pointer
+}
+
 int main()
 {
 
