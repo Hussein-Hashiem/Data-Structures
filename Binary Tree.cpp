@@ -61,13 +61,18 @@ void LevelorderTraversal(Node *root)
     Q.push(root);    // Start with the root node
     while (!Q.empty())
     {
-        Node *curr = Q.front();    // Get the front node
-        cout << curr->data << ' '; // Print current node's data
-        if (curr->left != nullptr) // Enqueue left child if exists
-            Q.push(curr->left);
-        if (curr->right != nullptr) // Enqueue right child if exists
-            Q.push(curr->right);
-        Q.pop(); // Remove the processed node
+        int LevelSize = Q.size(); // Number of nodes in the current level
+        for (int i = 0; i < LevelSize; i++)
+        {
+            Node *curr = Q.front();    // Get the front node
+            cout << curr->data << ' '; // Print current node's data
+            if (curr->left != nullptr) // Enqueue left child if exists
+                Q.push(curr->left);
+            if (curr->right != nullptr) // Enqueue right child if exists
+                Q.push(curr->right);
+            Q.pop(); // Remove the processed node
+        }
+        cout << '\n';
     }
 }
 
